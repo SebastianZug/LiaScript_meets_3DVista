@@ -1,5 +1,15 @@
 # 📝 Changelog
 
+## Version 1.4 (2025-09-28) - Video-Optimierung für GitHub 🎬
+- ✅ **Video-Komprimierung** für GitHub-Kompatibilität implementiert
+- ✅ **Große Video-Dateien optimiert:**
+  - `video_E17BD4A8_EFB0_B84B_41E6_605C90C38D70_de.mp4`: 69MB → 8.6MB (87% kleiner)
+  - `video_E17C4894_EFB0_A85B_41D2_55B57A1D5BA5_de.mp4`: 48MB → 5.7MB (88% kleiner)
+  - `video_FFB71EED_EFB0_A9C4_41CA_B9348FB454A7_de.mp4`: 44MB → 4.5MB (90% kleiner)
+- ✅ **FFmpeg H.264-Komprimierung** mit optimierten Einstellungen
+- ✅ **Repository-Größe reduziert** für bessere GitHub-Performance
+- ✅ **Video-Qualität beibehalten** bei deutlich kleinerer Dateigröße
+
 ## Version 1.3 (2025-09-28) - LiaScript Integration & Dokumentationsstruktur 📚
 - ✅ **LiaScript-Integration** vollständig implementiert
 - ✅ **README.md als LiaScript-Dokument** konfiguriert mit LiaScript-Badge
