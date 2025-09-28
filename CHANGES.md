@@ -1,143 +1,148 @@
-# Umsetzung der 3DVista Virtual Tour für GitHub Pages / LiaScript
+# 🔧 Technische Änderungen - 3DVista Tour für GitHub Pages
 
-## 📁 Projektstruktur
+Dieses Dokument beschreibt alle notwendigen Modifikationen, die am ursprünglichen TourDe360-Export vorgenommen wurden, um die Virtual Tour auf GitHub Pages lauffähig zu machen.
+
+## 🏗️ Hauptprobleme des Original-Exports
+
+Der ursprüngliche TourDe360-Export war **nicht lauffähig** aufgrund mehrerer struktureller Probleme:
+
+1. **❌ Absolute Pfade:** `/lib/tdvplayer.js`, `/script.js` → 404-Fehler
+2. **❌ Fehlende PDF.js-Konfiguration:** `.properties`-Dateien fehlten
+3. **❌ Gebrochene Lokalisierung:** Falsche Locale-Pfade in JavaScript
+4. **❌ GitHub Pages inkompatibel:** `index.htm` statt `index.html`
+5. **❌ Cache-Probleme:** Alte Versionsnummern
+6. **❌ PDF-Downloads defekt:** JavaScript-Pfadmanipulation
+
+## ⚡ Kritische Korrekturen (notwendig für Funktionsfähigkeit)
+
+### 1. **Pfad-System komplett überarbeitet**
+```bash
+# Alle absoluten Pfade korrigiert:
+/lib/tdvplayer.js        → data/lib/tdvplayer.js
+/script.js               → data/script.js  
+/script_general.js       → data/script_general.js
+/script_mobile.js        → data/script_mobile.js
+/fonts.css               → data/fonts.css
 ```
-├── index.html                # Haupt-HTML-Datei (GitHub Pages optimiert)
-├── .nojekyll                 # Deaktiviert Jekyll-Processing für GitHub Pages
-├── README.md                 # Diese Dokumentation
-├── lib -> data/lib          # Symbolischer Link zu Bibliotheken
-├── locale -> data/locale    # Symbolischer Link zu Lokalisierungen
-└── data/                    # Hauptdatenverzeichnis
-    ├── fonts.css           # Font-Definitionen
-    ├── script.js           # Haupt-Konfigurationsskript
-    ├── script_general.js   # Desktop-spezifisches Skript
-    ├── script_mobile.js    # Mobile-spezifisches Skript
-    ├── thumbnail.png       # Vorschaubild
-    ├── fonts/              # Schriftarten-Dateien
-    ├── lib/                # JavaScript-Bibliotheken
-    │   ├── tdvplayer.js   # TDV Player Engine
-    │   ├── cursors/       # Cursor-Dateien für Interaktion
-    │   └── pdfjs/         # PDF.js für PDF-Anzeige
-    ├── locale/             # Sprachdateien
-    │   └── de.txt         # Deutsche Lokalisierung
-    ├── media/             # Panorama-Bilder und Medien
-    ├── skin/              # UI-Grafiken und Icons
-    └── files/             # PDF-Dokumente und Downloads
+
+### 2. **Symbolische Links für Kompatibilität**
+```bash
+ln -s data/lib lib                # Haupt-Bibliotheken
+ln -s data/locale locale          # Lokalisierungen
+ln -s locale.properties.txt locale.properties    # PDF.js
+ln -s viewer.properties.txt viewer.properties    # PDF.js EN
 ```
 
-## 🔧 Durchgeführte Konfigurationsänderungen
+### 3. **JavaScript-Konfiguration repariert**
+- **script.js:** Device-URLs von `/` zu `data/` korrigiert
+- **script_mobile.js + script_general.js:** Locale-Pfade repariert
+- **Alle Skripte:** Cache-Busting Version aktualisiert
 
-### 1. Pfad-Korrekturen
+### 4. **PDF-System komplett repariert (Version 1.5)**
+- **openLink-Funktion:** Problematische Pfadmanipulation entfernt
+- **Lokalisierungsdateien:** Alle PopupPDFBehaviour-URLs korrigiert
+- **6 PDF-Downloads:** Von defekt zu vollständig funktionsfähig
 
-**Problem:** TourDe360-Export verwendete absolute Pfade (`/lib/`, `/script.js`), die in lokalen Umgebungen nicht funktionieren.
+## ✅ Endresultat - Vollständig funktionsfähige Tour
 
-**Lösung:** Alle Pfade zu relativen Pfaden mit `data/`-Prefix geändert:
+**Alle ursprünglichen Funktionen wiederhergestellt:**
+- ✅ 360°-Panorama-Navigation zwischen 23 Szenen
+- ✅ Interaktive Hotspots und Navigationspunkte  
+- ✅ PDF-Document-Viewer mit 6 funktionsfähigen Downloads
+- ✅ Responsive Design (Desktop + Mobile optimiert)
+- ✅ Deutsche Lokalisierung komplett
+- ✅ Bildergalerien und Video-Popups
+- ✅ Cursor-Animationen und UI-Feedback
 
-#### index.html (ursprünglich index.htm)
+**GitHub Pages & LiaScript Integration:**
+- ✅ Live verfügbar: https://sebastianzug.github.io/LiaScript_meets_3DVista/
+- ✅ LiaScript-Integration für Bildungskontext
+- ✅ Keine Jekyll-Konflikte durch `.nojekyll`
+- ✅ Optimierte Performance durch Video-Komprimierung
+
+## � Detaillierte Korrekturen (für Entwickler)
+
+<details>
+<summary><strong>🔧 Pfad-Korrekturen im Detail</strong></summary>
+
+### index.html (ursprünglich index.htm)
 ```html
-<!-- Vorher -->
-<script type="text/javascript" src="/lib/tdvplayer.js?v=1756890344179"></script>
-<script type="text/javascript" src="/script.js?v=1756890344179"></script>
+<!-- Absolute Pfade (Original) -->
+<script src="/lib/tdvplayer.js?v=1756890344179"></script>
+<script src="/script.js?v=1756890344179"></script>
 
-<!-- Nachher -->
-<script type="text/javascript" src="data/lib/tdvplayer.js?v=1756890344180"></script>
-<script type="text/javascript" src="data/script.js?v=1756890344180"></script>
+<!-- Relative Pfade (Korrigiert) -->  
+<script src="data/lib/tdvplayer.js?v=1756890344180"></script>
+<script src="data/script.js?v=1756890344180"></script>
 ```
 
-#### data/script.js
+### data/script.js
 ```javascript
-// Vorher
+// Gebrochene Device-URLs (Original)
 "devicesUrl": {
     "general": "script_general.js?v=1756890344179",
     "mobile": "script_mobile.js?v=1756890344179"
 }
 
-// Nachher  
+// Funktionsfähige Pfade (Korrigiert)
 "devicesUrl": {
-    "general": "data/script_general.js?v=1756890344180",
+    "general": "data/script_general.js?v=1756890344180", 
     "mobile": "data/script_mobile.js?v=1756890344180"
 }
 ```
 
-### 2. Symbolische Links
+</details>
 
-**Problem:** Hardcodierte Pfade in minimierten JavaScript-Dateien (tdvplayer.js) konnten nicht einfach geändert werden.
-
-**Lösung:** Symbolische Links erstellt für Rückwärtskompatibilität:
+<details>
+<summary><strong>🔗 Symbolische Links</strong></summary>
 
 ```bash
-# Hauptbibliotheken-Link
+# Rückwärtskompatibilität für hardcodierte Pfade
 ln -s data/lib lib
-
-# Lokalisierungs-Link  
 ln -s data/locale locale
-```
 
-### 3. PDF.js-Konfiguration
-
-**Problem:** PDF.js suchte nach `.properties`-Dateien, aber nur `.properties.txt`-Dateien waren vorhanden.
-
-**Lösung:** Symbolische Links für PDF.js-Konfigurationsdateien:
-
-```bash
-# Haupt-Locale-Datei
-cd data/lib/pdfjs/web/locale
+# PDF.js-Konfiguration
+cd data/lib/pdfjs/web/locale/
 ln -sf locale.properties.txt locale.properties
-
-# Englische Lokalisierung
 cd en-US/
 ln -sf viewer.properties.txt viewer.properties
 ```
 
-### 4. Locale-Pfad-Korrekturen
+</details>
 
-**Problem:** Mobile- und Desktop-Skripte verwendeten falschen Locale-Pfad.
+<details>
+<summary><strong>📄 PDF-System Reparatur (v1.5)</strong></summary>
 
-**Lösung:** In `script_mobile.js` und `script_general.js`:
-
+### JavaScript openLink-Funktion korrigiert:
 ```javascript
-// Vorher
-"locales":{"de":"locale/de.txt"}
+// DEFEKT: Machte relative zu absoluten Pfaden
+if(c&&b=='_blank'){a['startsWith']('data/files/')&&(a='/'+a);
 
-// Nachher  
-"locales":{"de":"data/locale/de.txt"}
+// REPARIERT: Pfade unverändert lassen  
+if(c&&b=='_blank'){if(a['startsWith']('//'))a='https:'+a;
 ```
 
-### 5. Cache-Busting
+### Lokalisierungsdateien repariert:
+```txt
+# 6 PopupPDFBehaviour-URLs korrigiert:
+files/Anleitung_Arduino_de.pdf → data/files/Anleitung_Arduino_de.pdf
+files/Praktikumsanleitung_Teil1_Einführung&Grundlagen_de.pdf → data/files/Praktikumsanleitung_Teil1_Einführung&Grundlagen_de.pdf
+[...weitere 4 PDFs...]
+```
 
-**Problem:** Browser-Cache verhinderte das Laden von aktualisierten Dateien.
+</details>
 
-**Lösung:** Versionsnummer erhöht:
-- Von `v=1756890344179` auf `v=1756890344180`
+---
 
-### 6. GitHub Pages Optimierungen
+## 🚀 Für neue Installationen
 
-**Problem:** GitHub Pages erwartet spezifische Dateiformate und -strukturen.
+**Um eine neue 3DVista-Tour GitHub Pages-kompatibel zu machen:**
 
-**Lösungen implementiert:**
-- ✅ `index.htm` → `index.html` umbenannt (GitHub Pages Standard)
-- ✅ `.nojekyll`-Datei hinzugefügt (verhindert Jekyll-Processing)
-- ✅ Alle relativen Pfade beibehalten (GitHub Pages kompatibel)
-- ✅ Repository-Struktur für GitHub Pages optimiert
+1. **Pfade korrigieren:** Alle `/lib/`, `/script.js` etc. zu `data/` 
+2. **Symbolische Links erstellen:** Für Rückwärtskompatibilität
+3. **PDF.js konfigurieren:** `.properties`-Links erstellen
+4. **GitHub Pages Setup:** `index.html`, `.nojekyll`
+5. **Cache-Busting:** Versionsnummern aktualisieren
+6. **PDF-Downloads testen:** openLink-Funktion überprüfen
 
-## ✅ Behobene Probleme
-
-### 404-Fehler behoben:
-- ✅ `/lib/tdvplayer.js` → `data/lib/tdvplayer.js`
-- ✅ `/script.js` → `data/script.js`  
-- ✅ `/script_general.js` → `data/script_general.js`
-- ✅ `/script_mobile.js` → `data/script_mobile.js`
-- ✅ `/fonts.css` → `data/fonts.css`
-- ✅ `/lib/cursors/*.cur` → Symbolischer Link zu `data/lib/cursors/`
-- ✅ `/lib/pdfjs/web/locale/locale.properties` → Symbolischer Link
-- ✅ `/lib/pdfjs/web/locale/en-US/viewer.properties` → Symbolischer Link
-- ✅ `/locale/de.txt` → Symbolischer Link + Skript-Korrektur
-
-### Funktionalität wiederhergestellt:
-- ✅ 360°-Panorama-Navigation
-- ✅ Hotspot-Interaktion zwischen Szenen
-- ✅ PDF-Document-Viewer
-- ✅ Cursor-Animationen (grab/grabbing)
-- ✅ Responsive Design (Desktop/Mobile)
-- ✅ Deutsche Lokalisierung
-- ✅ Bildergalerien und Medien-Popups
+💡 **Tipp:** Diese Korrekturen sind bei jedem TourDe360-Export notwendig, da der Export immer absolute Pfade verwendet.

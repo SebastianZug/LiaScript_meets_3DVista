@@ -3,12 +3,12 @@
 ## Aktion
 
 ### PDF
-PopupPDFBehaviour_135CC2EC_04F4_9B25_415E_E651370987A0.url = files/Praktikumsanleitung_Teil1_Einf%C3%BChrung&Grundlagen_de.pdf
-PopupPDFBehaviour_ED7F45DE_F190_BBC4_41DE_09730DBACF56.url = files/Anleitung_Regelkreis_SS2024_de.pdf
-PopupPDFBehaviour_1CFAC54A_04EC_996D_4192_4A43BB35F11E.url = files/Anleitung_DM_WiSe2023_2024_de.pdf
-PopupPDFBehaviour_1C84F0C4_04EF_9764_417D_08DD067F64B4.url = files/Excel_Datenstreamer_SS2023_de.pdf
-PopupPDFBehaviour_1DD6F39C_04EC_99E5_40F1_D60E3E233180.url = files/Anleitung_Arduino_de.pdf
-PopupPDFBehaviour_E7CDE40B_F57E_9702_41ED_AFD3351DD633.url = files/2022-11-04_Anleitung_MK_R04_de.pdf
+PopupPDFBehaviour_135CC2EC_04F4_9B25_415E_E651370987A0.url = data/files/Praktikumsanleitung_Teil1_Einf%C3%BChrung&Grundlagen_de.pdf
+PopupPDFBehaviour_ED7F45DE_F190_BBC4_41DE_09730DBACF56.url = data/files/Anleitung_Regelkreis_SS2024_de.pdf
+PopupPDFBehaviour_1CFAC54A_04EC_996D_4192_4A43BB35F11E.url = data/files/Anleitung_DM_WiSe2023_2024_de.pdf
+PopupPDFBehaviour_1C84F0C4_04EF_9764_417D_08DD067F64B4.url = data/files/Excel_Datenstreamer_SS2023_de.pdf
+PopupPDFBehaviour_1DD6F39C_04EC_99E5_40F1_D60E3E233180.url = data/files/Anleitung_Arduino_de.pdf
+PopupPDFBehaviour_E7CDE40B_F57E_9702_41ED_AFD3351DD633.url = data/files/2022-11-04_Anleitung_MK_R04_de.pdf
 
 ### URL
 LinkBehaviour_15D4AEAB_0EA0_B62F_4198_77D85E3828E6.source = https://tu-dresden.de/ing/der-bereich/team-digitale-lehre

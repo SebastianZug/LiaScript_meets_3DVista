@@ -1,5 +1,26 @@
 # 📝 Changelog
 
+## Version 1.5 (2025-09-28) - PDF-Download-Fehlerbehebung 📄✅
+- ✅ **Kritisches PDF-Problem behoben** - Alle Downloads funktionieren jetzt
+- ✅ **JavaScript openLink-Funktion korrigiert** in `data/script.js`
+  - Entfernt: Automatisches Hinzufügen von führenden Slashes bei `data/files/`-Pfaden
+  - Problem: `data/files/Anleitung_Arduino_de.pdf` wurde zu `/data/files/Anleitung_Arduino_de.pdf`
+- ✅ **Lokalisierungsdateien repariert:**
+  - `locale/de.txt`: Alle PopupPDFBehaviour URLs von `files/` zu `data/files/` korrigiert
+  - `data/locale/de.txt`: Identische Korrekturen angewendet
+- ✅ **6 PDF-Dokumente validiert und funktionsfähig:**
+  - Anleitung_Arduino_de.pdf (6.5 MB)
+  - Praktikumsanleitung_Teil1_Einführung&Grundlagen_de.pdf
+  - Anleitung_Regelkreis_SS2024_de.pdf
+  - Anleitung_DM_WiSe2023_2024_de.pdf
+  - Excel_Datenstreamer_SS2023_de.pdf  
+  - 2022-11-04_Anleitung_MK_R04_de.pdf
+- ✅ **Test-Tools entwickelt:**
+  - `test_downloads.html`: Allgemeine PDF-Download-Tests
+  - `test_arduino.html`: Spezifische Tests für problematische Dateien
+- ✅ **Debugging-Prozess dokumentiert** in CHANGES.md
+- 🎯 **Ergebnis:** Tour ist jetzt vollständig produktionsreif für Studenten
+
 ## Version 1.4 (2025-09-28) - Video-Optimierung für GitHub 🎬
 - ✅ **Video-Komprimierung** für GitHub-Kompatibilität implementiert
 - ✅ **Große Video-Dateien optimiert:**
