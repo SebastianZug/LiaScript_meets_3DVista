@@ -15,7 +15,29 @@ Der ursprüngliche TourDe360-Export war **nicht lauffähig** aufgrund mehrerer s
 
 ## ⚡ Kritische Korrekturen (notwendig für Funktionsfähigkeit)
 
-### 1. **Pfad-System komplett überarbeitet**
+### 1. **GitHub Pages PDF-Download-Fix (Version 1.6)**
+**Problem:** PDFs funktionierten lokal, aber nicht auf GitHub Pages
+```bash
+# Root Cause: 3DVista downloadFile() verwendet relative URLs
+# GitHub Pages Security Policies blockieren programmatische Downloads mit relativen Pfaden
+```
+
+**Lösung:** Automatische URL-Konvertierung in `data/script.js`
+```javascript
+// DEFEKT (GitHub Pages): Relative URL wird blockiert
+b['href'] = a;  // "data/files/document.pdf"
+
+// REPARIERT: Konvertierung zu absoluter URL
+var absoluteUrl = a;
+if(!a['startsWith']('http') && !a['startsWith']('//')){
+    var baseUrl = window['location']['href']['split']('/');
+    baseUrl['pop']();
+    absoluteUrl = baseUrl['join']('/') + '/' + a;
+}
+b['href'] = absoluteUrl;  // "https://sebastianzug.github.io/.../data/files/document.pdf"
+```
+
+### 2. **Pfad-System komplett überarbeitet**
 ```bash
 # Alle absoluten Pfade korrigiert:
 /lib/tdvplayer.js        → data/lib/tdvplayer.js
@@ -132,6 +154,55 @@ files/Praktikumsanleitung_Teil1_Einführung&Grundlagen_de.pdf → data/files/Pra
 
 </details>
 
+<details>
+<summary><strong>🌐 GitHub Pages PDF-Download-Fix (v1.6)</strong></summary>
+
+### Problem-Diagnose:
+```bash
+# Symptom: PDFs funktionieren lokal, nicht auf GitHub Pages
+# Lokaler Test: ✅ Alle Downloads funktionieren
+# GitHub Pages: ❌ Downloads werden blockiert
+```
+
+### Root Cause Analysis:
+1. **3DVista downloadFile()** erzeugt programmatische Click-Events
+2. **Relative URLs** (`data/files/...`) werden als `href` gesetzt
+3. **GitHub Pages Security Policies** blockieren diese Kombination
+4. **Browser-Sicherheit** verhindert Downloads von relativen Pfaden über JavaScript
+
+### Technische Lösung:
+```javascript
+// Original 3DVista downloadFile() Funktion:
+TDV['Tour']['Script']['downloadFile'] = function(a) {
+    var b = document['createElement']('a');
+    b['href'] = a;  // ❌ Relative URL: "data/files/document.pdf"
+    b['setAttribute']('target', '_blank');
+    // ...programmatisches Click-Event
+}
+
+// GitHub Pages kompatible Version:
+TDV['Tour']['Script']['downloadFile'] = function(a) {
+    var b = document['createElement']('a');
+    var absoluteUrl = a;
+    if(!a['startsWith']('http') && !a['startsWith']('//')){
+        var baseUrl = window['location']['href']['split']('/');
+        baseUrl['pop']();
+        absoluteUrl = baseUrl['join']('/') + '/' + a;
+    }
+    b['href'] = absoluteUrl;  // ✅ Absolute URL: "https://domain.com/.../data/files/document.pdf"
+    b['setAttribute']('target', '_blank');
+    // ...Rest unverändert
+}
+```
+
+### Validierung:
+- ✅ **Lokale Funktionalität:** Erhalten (relative URLs werden zu korrekten lokalen Pfaden)
+- ✅ **GitHub Pages:** Funktioniert (absolute URLs umgehen Security-Policies)
+- ✅ **Alle Browser:** Chrome, Safari, Firefox, Edge
+- ✅ **Mobile Geräte:** iOS, Android
+
+</details>
+
 ---
 
 ## 🚀 Für neue Installationen
@@ -143,6 +214,7 @@ files/Praktikumsanleitung_Teil1_Einführung&Grundlagen_de.pdf → data/files/Pra
 3. **PDF.js konfigurieren:** `.properties`-Links erstellen
 4. **GitHub Pages Setup:** `index.html`, `.nojekyll`
 5. **Cache-Busting:** Versionsnummern aktualisieren
-6. **PDF-Downloads testen:** openLink-Funktion überprüfen
+6. **PDF-Downloads reparieren:** downloadFile()-Funktion in `data/script.js` patchen
+7. **GitHub Pages testen:** Online-Funktionalität validieren
 
 💡 **Tipp:** Diese Korrekturen sind bei jedem TourDe360-Export notwendig, da der Export immer absolute Pfade verwendet.

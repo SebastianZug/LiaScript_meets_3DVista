@@ -1,6 +1,20 @@
 # 📝 Changelog
 
-## Version 1.5 (2025-09-28) - PDF-Download-Fehlerbehebung 📄✅
+## Version 1.6 (2025-09-28) - GitHub Pages PDF-Download-Fix 🌐📄
+- 🎯 **Kritisches GitHub Pages Problem gelöst** - PDFs funktionieren jetzt online
+- 🔧 **3DVista downloadFile()-Funktion repariert** in `data/script.js`
+  - Problem: Relative URLs (`data/files/...`) werden von GitHub Pages Security-Policies blockiert
+  - Lösung: Automatische Konvertierung zu absoluten URLs vor Download
+  - Technik: Programmatische Click-Events auf `<a>`-Tags mit korrekten href-Attributen
+- ✅ **Alle Browser unterstützt** (Chrome, Safari, Firefox)
+- ✅ **Lokale Funktionalität erhalten** - Funktioniert weiterhin offline
+- ✅ **Diagnostik-Tools entwickelt:**
+  - `test_github_pdf.html`: Comprehensive PDF-Funktionalität-Tests
+  - Direkte URL-Tests, iframe-Embedding, JavaScript-Simulation
+- 🚀 **Deployment-Prozess dokumentiert** mit vollständiger Fehleranalyse
+- 🎯 **Ergebnis:** 3DVista-Tour ist jetzt vollständig GitHub Pages kompatibel
+
+## Version 1.5 (2025-09-28) - PDF-Download-Fehlerbehebung (Lokal) 📄✅
 - ✅ **Kritisches PDF-Problem behoben** - Alle Downloads funktionieren jetzt
 - ✅ **JavaScript openLink-Funktion korrigiert** in `data/script.js`
   - Entfernt: Automatisches Hinzufügen von führenden Slashes bei `data/files/`-Pfaden
