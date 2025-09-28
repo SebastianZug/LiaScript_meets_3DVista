@@ -4,6 +4,10 @@ Eine interaktive 360°-Virtual Tour erstellt mit TourDe360/TDV Player. Diese Tou
 
 ## 🚀 Schnellstart
 
+### Live-Demo (GitHub Pages)
+**🌐 https://sebastianzug.github.io/LiaScript_meets_3DVista/**
+
+### Lokale Entwicklung
 ```bash
 # In das Projektverzeichnis wechseln
 cd /path/to/project
@@ -18,7 +22,8 @@ python3 -m http.server 8000
 ## 📁 Projektstruktur
 
 ```
-├── index.htm                 # Haupt-HTML-Datei
+├── index.html                # Haupt-HTML-Datei (GitHub Pages optimiert)
+├── .nojekyll                 # Deaktiviert Jekyll-Processing für GitHub Pages
 ├── README.md                 # Diese Dokumentation
 ├── lib -> data/lib          # Symbolischer Link zu Bibliotheken
 ├── locale -> data/locale    # Symbolischer Link zu Lokalisierungen
@@ -48,7 +53,7 @@ python3 -m http.server 8000
 
 **Lösung:** Alle Pfade zu relativen Pfaden mit `data/`-Prefix geändert:
 
-#### index.htm
+#### index.html (ursprünglich index.htm)
 ```html
 <!-- Vorher -->
 <script type="text/javascript" src="/lib/tdvplayer.js?v=1756890344179"></script>
@@ -125,6 +130,16 @@ ln -sf viewer.properties.txt viewer.properties
 **Lösung:** Versionsnummer erhöht:
 - Von `v=1756890344179` auf `v=1756890344180`
 
+### 6. GitHub Pages Optimierungen
+
+**Problem:** GitHub Pages erwartet spezifische Dateiformate und -strukturen.
+
+**Lösungen implementiert:**
+- ✅ `index.htm` → `index.html` umbenannt (GitHub Pages Standard)
+- ✅ `.nojekyll`-Datei hinzugefügt (verhindert Jekyll-Processing)
+- ✅ Alle relativen Pfade beibehalten (GitHub Pages kompatibel)
+- ✅ Repository-Struktur für GitHub Pages optimiert
+
 ## ✅ Behobene Probleme
 
 ### 404-Fehler behoben:
@@ -187,6 +202,32 @@ ln -sf viewer.properties.txt viewer.properties
 
 ## 📋 Deployment
 
+### GitHub Pages (Empfohlen) 🌐
+**Live-URL:** https://sebastianzug.github.io/LiaScript_meets_3DVista/
+
+#### Setup-Schritte:
+1. **Repository zu GitHub pushen:**
+   ```bash
+   git remote add origin https://github.com/SebastianZug/LiaScript_meets_3DVista.git
+   git push -u origin main
+   ```
+
+2. **GitHub Pages aktivieren:**
+   - Gehe zu Repository-Settings
+   - Navigiere zu "Pages"
+   - Wähle Source: "Deploy from a branch"
+   - Branch: `main`, Folder: `/ (root)`
+   - Klicke "Save"
+
+3. **Warten:** 5-10 Minuten bis Deployment abgeschlossen
+
+#### GitHub Pages Vorteile:
+- ✅ **Kostenlos** und automatisch aktualisiert
+- ✅ **HTTPS** standardmäßig aktiviert
+- ✅ **CDN-Cache** für weltweite Performance
+- ✅ **Automatische Builds** bei Git-Push
+- ✅ **Custom Domain** optional möglich
+
 ### Lokale Entwicklung
 ```bash
 python3 -m http.server 8000
@@ -196,10 +237,11 @@ npx http-server -p 8000
 php -S localhost:8000
 ```
 
-### Produktions-Deployment
-1. Gesamten Projektordner auf Webserver hochladen
-2. Symbolische Links müssen unterstützt werden (Linux/Unix-Server)
-3. Alternativ: Symbolische Links durch echte Kopien ersetzen:
+### Alternative Produktions-Deployments
+1. **Traditioneller Webserver:**
+   - Gesamten Projektordner auf Webserver hochladen
+   - Symbolische Links müssen unterstützt werden (Linux/Unix-Server)
+   - Alternativ: Symbolische Links durch echte Kopien ersetzen:
 
 ```bash
 # Symbolische Links durch Kopien ersetzen
@@ -207,6 +249,11 @@ rm lib locale
 cp -r data/lib ./lib
 cp -r data/locale ./locale
 ```
+
+2. **Netlify/Vercel Alternative:**
+   - Drag & Drop Deployment möglich
+   - Automatische HTTPS und CDN
+   - Git-Integration verfügbar
 
 ## 🐛 Troubleshooting
 
@@ -224,9 +271,29 @@ cp -r data/locale ./locale
 **Problem:** Mobile Navigation funktioniert nicht
 **Lösung:** Touch-Events im Browser aktivieren
 
+**Problem:** GitHub Pages zeigt 404-Fehler
+**Lösung:** 
+- Sicherstellen, dass `index.html` (nicht .htm) verwendet wird
+- `.nojekyll`-Datei muss vorhanden sein
+- Deployment-Status in GitHub Actions überprüfen
+
+**Problem:** GitHub Pages Build-Fehler
+**Lösung:**
+- Repository-Settings → Pages überprüfen
+- Branch und Folder korrekt eingestellt (main, / root)
+- Commit und Push durchführen, dann 5-10 Minuten warten
+
 ## 📝 Changelog
 
-### Version 1.1 (2025-09-28)
+### Version 1.2 (2025-09-28) - GitHub Pages Ready 🌐
+- ✅ **GitHub Pages Deployment** konfiguriert und live
+- ✅ `index.htm` → `index.html` umbenannt
+- ✅ `.nojekyll`-Datei hinzugefügt
+- ✅ **Live-URL verfügbar:** https://sebastianzug.github.io/LiaScript_meets_3DVista/
+- ✅ Repository vollständig dokumentiert
+- ✅ Deployment-Anweisungen hinzugefügt
+
+### Version 1.1 (2025-09-28) - Lokale Fixes
 - ✅ Alle Pfad-Probleme behoben
 - ✅ PDF.js vollständig konfiguriert  
 - ✅ Symbolische Links für Kompatibilität
@@ -242,10 +309,24 @@ cp -r data/locale ./locale
 ## 🤝 Support
 
 Bei Problemen oder Fragen:
+
+### Lokale Entwicklung:
 1. Browser-Konsole auf Fehler prüfen (F12)
 2. Netzwerk-Tab auf 404-Fehler überprüfen
 3. HTTP-Server statt file:// verwenden
 4. Cache leeren und neu laden
+
+### GitHub Pages Probleme:
+1. **URL prüfen:** https://sebastianzug.github.io/LiaScript_meets_3DVista/
+2. **Deployment-Status:** Repository → Actions oder Environments
+3. **Warte-Zeit:** 5-10 Minuten nach Git-Push
+4. **Settings prüfen:** Repository → Settings → Pages
+5. **Browser-Cache leeren** bei Aktualisierungen
+
+### Deployment-Status prüfen:
+- ✅ **Aktiv:** Grüner Punkt bei Environments
+- 🟡 **Building:** Gelber Punkt, warten...
+- 🔴 **Fehler:** Rote Markierung, Logs prüfen
 
 ## 📄 Lizenz
 
