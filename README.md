@@ -21,7 +21,7 @@ Das Vorliegende Repository enthält eine angepasste Version, die
 
 lauffähig ist. 
 
-Das Projekt findet sich auf Github unter https://github.com/sebastianzug/LiaScript_meets_3DVista. Die vorgenommenen Änderungen sind CHANGES.md und HISTORY.md dokumentiert.
+Das Projekt findet sich auf Github unter https://github.com/sebastianzug/LiaScript_meets_3DVista. Die vorgenommenen Änderungen sind in [CHANGES.md](CHANGES.md) und [HISTORY.md](HISTORY.md) dokumentiert.
 
 ### Lokale Entwicklung
 
@@ -81,7 +81,7 @@ Der Github Page Link kann direkt in ein LiaScript Dokument eingebunden werden, u
 ??[3DVista_example](https://sebastianzug.github.io/LiaScript_meets_3DVista/)
 ```
 
-> Seien Sie sich bewusst, dass die Performance und das Nutzererlebnis je nach Endgerät und Netzwerkbedingungen variieren können. Auf meinem Rechner dauerte es etwa 20 Sekunden bis die Tour vollständig geladen war.
+> __Seien Sie sich bewusst, dass die Performance und das Nutzererlebnis je nach Endgerät und Netzwerkbedingungen variieren können. Auf meinem Rechner dauerte es etwa 20 Sekunden bis die Tour vollständig geladen war.__
 
 ??[3DVista_example](https://sebastianzug.github.io/LiaScript_meets_3DVista/ "Beispielumsetzung einer 3DVista Lernumgebung in LiScript")
 
